@@ -1,0 +1,481 @@
+﻿@model IEnumerable<InquiryPortal.Models.ContainerIndex>
+@{
+    ViewBag.Title = "Inquiry Portal";
+    /* var latestInvoiceDate = ViewBag.LatestInvoiceDate as DateOnly? */
+    ;
+}
+
+
+
+
+<!-- SweetAlert CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+<!-- SweetAlert JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Include DataTables CSS and JS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+<!-- Include SweetAlert2 -->
+
+<script src="~/js/site.js"></script>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 16px; /* Slightly smaller font size */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    th, td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: center;
+    }
+
+    th {
+        background-color: #002D42;
+        color: white;
+        text-transform: uppercase;
+        font-size: 14px; /* Smaller font size for headers */
+    }
+
+    tbody tr {
+        transition: background-color 0.3s;
+    }
+
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tbody tr:hover {
+            background-color: #e0f7fa;
+        }
+
+    #tblhistory_filter {
+        padding: 5px;
+        margin-top: 10px;
+    }
+
+    #tblhistory_length {
+        padding: 5px;
+        margin-top: 10px;
+    }
+
+    .error-message {
+        color: red;
+        margin: 20px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .no-data {
+        text-align: center;
+        font-size: 18px;
+        color: #555;
+    }
+
+    .last-updated {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 14px;
+        color: #666;
+        padding: 10px 20px;
+        background-color: #f9f9f9;
+    }
+
+    .dt-buttons {
+        margin: 20px;
+    }
+
+    .date {
+        font-weight: bold;
+        color: #333;
+    }
+
+
+    .details-button {
+        background-color: #c9302c;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 15px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+        .details-button:hover {
+            background-color: #b22025;
+        }
+
+    table.dataTable .dt-button {
+        background-color: #c9302c !important; /* Background color */
+        color: white !important; /* Text color */
+        border: none !important; /* Remove border */
+        padding: 8px 12px !important; /* Padding */
+        margin: 5px !important; /* Margin between buttons */
+        border-radius: 4px !important; /* Rounded corners */
+        font-size: 14px !important; /* Font size */
+        cursor: pointer !important; /* Cursor style */
+    }
+
+
+        /* Change color on hover */
+        table.dataTable .dt-button:hover {
+            background-color: #c9302c !important; /* Darker background on hover */
+        }
+</style>
+
+
+
+
+
+@if (Model != null && Model.Any())
+{
+    <table id="tblhistory">
+        <thead>
+            <tr>
+                <th>Container No</th>
+                <th>IGM No</th>
+                <th>BL No</th>
+                <th>Index No</th>
+                <th>Container Type</th>
+                <th>Goods Category</th>
+                <th>Arrival Date</th>
+                <th>Destuffed</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ContainerNo</td>
+                    <td>@item.IGM</td>
+                    <td>@item.BLNo</td>
+                    <td>@item.IndexNo</td>
+                    <td>@item.Type</td>
+                    <td>@item.GoodsHeadName</td>
+                    <td>@item.ArrivalDate</td>
+                    <td>@(item.Destuffed.HasValue ? (item.Destuffed.Value ? "Yes" : "-") : "-")</td>
+                    <td>
+                        <button type="button" class="details-button btn-sm" onclick="showContainerDetails('@item.ContainerNo','@item.BLNo')" style="display: flex; align-items: center; padding: 5px 10px;">
+                            Details <i class="fas fa-info-circle" style="margin-left: 5px;"></i>
+                        </button>
+
+                        @* <button type="button" class="details-button" onclick="showContainerDetails('@item.ContainerNo')">Details</button> *@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @*  <div class="last-updated">
+        <h4> Last Updated: <span class="date">@latestInvoiceDate?.ToShortDateString()</span></h4>
+    </div> *@
+    <a asp-action="ContainerInquiry" asp-controller="InquiryPortal" class="btn btn-primary mt-3">Back</a>
+}
+else
+{
+    <div class="no-data">No data found for the provided number.</div>
+}
+
+
+
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+<!-- Buttons extension CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
+<!-- Font Awesome CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<!-- Buttons extension JS -->
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+<!-- JSZip for Excel export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<!-- PDFMake for PDF export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<!-- Buttons HTML5 export -->
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+<!-- Print button -->
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+
+
+<script>
+    var $j = jQuery.noConflict();
+    $j(document).ready(function () {
+        console.log("Document ready, initializing DataTable");
+
+        // Check if the DataTable plugin is loaded
+        if ($j.fn.DataTable) {
+            $j('#tblhistory').DataTable({
+                "paging": true,
+                "searching": true,
+                "info": true,
+                "dom": 'Bfrtip',
+                "buttons": [
+                    {
+                        extend: 'excel',
+                        text: '<i class="fas fa-file-excel"></i> Excel',
+                        titleAttr: 'Export to Excel',
+                        className: 'dt-button'
+
+                    },
+                    {
+                        extend: 'pdf',
+                        text: '<i class="fas fa-download"></i> Download',
+                        titleAttr: 'Download as PDF',
+                        className: 'dt-button'
+
+                    },
+                    {
+                        extend: 'print',
+                        text: '<i class="fas fa-print"></i> Print',
+                        titleAttr: 'Print Table',
+                        className: 'dt-button'
+
+                    }
+                ],
+                "language": {
+                    "emptyTable": "No data available in table"
+                }
+            });
+            console.log("DataTable initialized successfully");
+        } else {
+            console.error("DataTable plugin is not loaded");
+        }
+    });
+</script>
+
+
+<script>
+
+    function showContainerDetails(containerNo, BLNo) {
+        if (!containerNo) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Container number is required.',
+            });
+            return;
+        }
+
+        fetch(`/InquiryPortal/Details?containerNo=${encodeURIComponent(containerNo)}&blNo=${encodeURIComponent(BLNo)}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Data received:', data);
+
+                if (!data || Object.keys(data).length === 0) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'No data found for this container!',
+                    });
+                    return;
+                }
+
+                const tableHtml = generateTableHtml(data);
+
+                Swal.fire({
+                    title: 'Container Inquiry Details',
+                    html: tableHtml,
+                    width: 700,
+                    padding: '5px',
+                    confirmButtonText: 'Close',
+                    confirmButtonColor: '#b22025',
+                    showCloseButton: true,
+                    customClass: {
+                        popup: 'swal2-popup'
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: `Something went wrong: ${error.message}`,
+                });
+            });
+    }
+
+    function generateTableHtml(data) {
+        console.log(data);
+        return `
+                <table id="tblhistory1" style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr>
+                            <th style="padding: 10px; border: 1px solid #ddd;">Detail</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">Value</th>
+                        </tr>
+                    </thead>
+        <tbody>
+            ${Object.entries(data).map(([key, value]) => `
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>${capitalizeFirstLetter(key)}:</strong></td>
+                    <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">${value}</td>
+                </tr>`).join('')}
+        </tbody
+                </table>
+            `;
+    }
+
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+
+
+
+
+    // function showContainerDetails(containerNo) {
+    //     fetch(`/InquiryPortal/Details?containerNo=${encodeURIComponent(containerNo)}`)
+    //         .then(response => {
+    //             if (!response.ok) {
+    //                 throw new Error('Network response was not ok');
+    //             }
+    //             return response.json();
+    //         })
+    //         .then(data => {
+
+    //             const tableHtml = `
+    //                             <table id="tblhistory1" style="width: 100%; border-collapse: collapse;">
+    //                         <thead>
+    //                             <tr>
+    //                                 <th style="padding: 10px; border: 1px solid #ddd;">Detail</th>
+    //                                 <th style="padding: 10px; border: 1px solid #ddd;">Value</th>
+    //                             </tr>
+    //                         </thead>
+    //                         <tbody>
+    //                             <tr>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>Container No:</strong></td>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">${data.containerNo}</td>
+    //                             </tr>
+    //                             <tr>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>IGM No:</strong></td>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">${data.igmNo}</td>
+    //                             </tr>
+    //                             <tr>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>BL No:</strong></td>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">${data.blNo}</td>
+    //                             </tr>
+    //                             <tr>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>Index No:</strong></td>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">${data.indexNo}</td>
+    //                             </tr>
+    //                             <tr>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>Line:</strong></td>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">${data.line}</td>
+    //                             </tr>
+    //                             <tr>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>Size/Type:</strong></td>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">${data.sizeType}</td>
+    //                             </tr>
+    //                             <tr>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>Category:</strong></td>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">${data.category}</td>
+    //                             </tr>
+    //                             <tr>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>Goods Description:</strong></td>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">${data.goodsDescription}</td>
+    //                             </tr>
+    //                             <tr>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>Port Of Discharge:</strong></td>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">${data.portOfDischarge}</td>
+    //                             </tr>
+    //                             <tr>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>Arrival Date:</strong></td>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">${data.arrivalDate}</td>
+    //                             </tr>
+    //                             <tr>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>Deliver Date:</strong></td>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">${data.deliverDate}</td>
+    //                             </tr>
+    //                             <tr>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>Vessel:</strong></td>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">${data.vessel}</td>
+    //                             </tr>
+    //                             <tr>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>Voyage:</strong></td>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">${data.voyage}</td>
+    //                             </tr>
+    //                             <tr>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>Shipper Seal:</strong></td>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">${data.shipperSeal}</td>
+    //                             </tr>
+    //                             <tr>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>Port Discharge Date:</strong></td>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">${data.portDischargeDate}</td>
+    //                             </tr>
+    //                             <tr>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>Gross Weight:</strong></td>
+    //                                 <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">${data.grossWeight}</td>
+    //                             </tr>
+    //                         </tbody>
+    //                     </table>
+    //                 `;
+
+    //             // Display the popup with SweetAlert
+    //             Swal.fire({
+    //                 title: 'Container Inquiry Details',
+    //                 html: tableHtml,
+    //                 width: 700,
+    //                 padding: '5px',
+    //                 confirmButtonText: 'Close',
+    //                 confirmButtonColor: '#b22025',
+    //                 showCloseButton: true,
+    //                 customClass: {
+    //                     popup: 'swal2-popup'
+    //                 }
+    //             });
+    //         })
+    //         .catch(error => {
+    //             console.error('There was a problem with the fetch operation:', error);
+    //             Swal.fire({
+    //                 icon: 'error',
+    //                 title: 'Oops...',
+    //                 text: 'Something went wrong while fetching details!',
+    //             });
+    //         });
+    // }
+
+
+
+</script>
+
+
+
+
+
+
+
+

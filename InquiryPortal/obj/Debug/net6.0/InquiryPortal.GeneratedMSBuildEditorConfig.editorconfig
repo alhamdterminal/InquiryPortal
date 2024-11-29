@@ -1,0 +1,63 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = InquiryPortal
+build_property.RootNamespace = InquiryPortal
+build_property.ProjectDir = D:\AICT_GIT_PROJECTS\InquiryPortal\InquiryPortal\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = D:\AICT_GIT_PROJECTS\InquiryPortal\InquiryPortal
+build_property._RazorSourceGeneratorDebug = 
+
+[D:/AICT_GIT_PROJECTS/InquiryPortal/InquiryPortal/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AICT_GIT_PROJECTS/InquiryPortal/InquiryPortal/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AICT_GIT_PROJECTS/InquiryPortal/InquiryPortal/Views/InquiryPortal/BillingInquiry.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5xdWlyeVBvcnRhbFxCaWxsaW5nSW5xdWlyeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AICT_GIT_PROJECTS/InquiryPortal/InquiryPortal/Views/InquiryPortal/ContainerInquiry.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5xdWlyeVBvcnRhbFxDb250YWluZXJJbnF1aXJ5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AICT_GIT_PROJECTS/InquiryPortal/InquiryPortal/Views/InquiryPortal/InquiryByContainerNo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5xdWlyeVBvcnRhbFxJbnF1aXJ5QnlDb250YWluZXJOby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AICT_GIT_PROJECTS/InquiryPortal/InquiryPortal/Views/InquiryPortal/InquiryPortalByBLNo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5xdWlyeVBvcnRhbFxJbnF1aXJ5UG9ydGFsQnlCTE5vLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AICT_GIT_PROJECTS/InquiryPortal/InquiryPortal/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AICT_GIT_PROJECTS/InquiryPortal/InquiryPortal/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AICT_GIT_PROJECTS/InquiryPortal/InquiryPortal/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AICT_GIT_PROJECTS/InquiryPortal/InquiryPortal/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/AICT_GIT_PROJECTS/InquiryPortal/InquiryPortal/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-ojxmb34en5

@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\InquiryPortal.props" />
+</Project>

@@ -1,0 +1,503 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Container Inquiry</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!-- SweetAlert CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('/img/bg1.jpeg');
+            background-size: cover;
+           
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 40px 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 700px;
+            width: 100%;
+        }
+
+        h2 {
+            color: #c9302c;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h5 {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            width: 300px;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            color: #c9302c;
+            margin-bottom: 15px;
+        }
+
+        .search-wrapper {
+            display: flex;
+            justify-content: center;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 10px;
+            font-size: 1rem;
+            border: 2px solid #c9302c;
+            border-radius: 25px 0 0 25px;
+            outline: none;
+            transition: border-color 0.3s ease;
+            width: 180px;
+        }
+
+        .search-input:focus {
+            border-color: #ff5722;
+            box-shadow: 0 0 5px rgba(255, 87, 34, 0.5);
+        }
+
+        .search-button {
+            background-color: #c9302c;
+            color: #fff;
+            border: none;
+            border-radius: 0 25px 25px 0;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s;
+        }
+
+        .search-button:hover {
+            background-color: #ff5722;
+            transform: scale(1.05);
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+
+        .custom-input {
+            border-radius: 20px;
+            border-color: #c9302c;
+            border-width: 1px;
+            border-style: solid;
+        }
+
+            .custom-input:focus {
+                border-color: #ff5722;
+                box-shadow: 0 0 5px rgba(255, 87, 34, 0.5);
+            }
+
+        
+        @@media (max-width: 768px) {
+            .row {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .card {
+                width: 100%;
+                max-width: 350px;
+            }
+        }
+        @@media (max-width: 768px) {
+    .srchBtnm{
+        margin-top: 10px;
+    }
+    }
+            /* Style for custom radio buttons */
+            .custom-radio {
+                position: relative;
+                display: inline-flex;
+                align-items: center;
+                cursor: pointer;
+                font-size: 18px;
+            color: #c9302c;
+                font-weight: 600;
+                transition: transform 0.3s ease;
+            }
+
+                .custom-radio input[type="radio"] {
+                    position: absolute;
+                    opacity: 0;
+                    pointer-events: none;
+                color: #c9302c;
+                }
+
+                .custom-radio .radio-label {
+                    display: inline-block;
+                    padding-left: 40px;
+                    position: relative;
+                    cursor: pointer;
+                    font-family: 'Arial', sans-serif;
+                font-weight: bold;
+                color: #c9302c;
+                    transition: color 0.3s ease, transform 0.3s ease;
+                }
+                    /* Custom round button appearance */
+                    .custom-radio .radio-label::before {
+                        content: '';
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        width: 26px;
+                        height: 26px;
+                        border-radius: 50%;
+                        background-color: #f0f0f0;
+                        border: 2px solid #ccc;
+                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                        transition: all 0.3s ease;
+                    }
+                /* Checked radio button styles */
+                .custom-radio input[type="radio"]:checked + .radio-label::before {
+                background-color: #c9302c; /* Vibrant coral */
+                border-color: #c9302c;
+                    box-shadow: 0 0 15px rgba(255, 111, 97, 0.6); /* Glow effect */
+                }
+
+                .custom-radio input[type="radio"]:checked + .radio-label::after {
+                    content: '';
+                    position: absolute;
+                    top: 6px;
+                    left: 6px;
+                    width: 14px;
+                    height: 14px;
+                    border-radius: 50%;
+                    background-color: white;
+                }
+                /* Hover effect */
+                .custom-radio:hover .radio-label::before {
+                border-color: #c9302c; /* On hover, make border match selected color */
+                    transform: scale(1.1); /* Slightly increase size on hover */
+                }
+
+                .custom-radio:hover .radio-label {
+                color: #c9302c; /* Text color changes on hover */
+                }
+                /* Focus effect (when clicking) */
+                .custom-radio input[type="radio"]:focus + .radio-label::before {
+                    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* Blue glow on focus */
+                }
+                /* Smooth transition on click */
+                .custom-radio:active .radio-label::before {
+                    transform: scale(0.95);
+                }
+                /* Custom cursor */
+                .custom-radio:hover {
+                    cursor: pointer;
+                }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome To AICT Inquiry Portal</h2>
+        <h5>Unlock all the essential Container details effortlessly—and get real-time updates and information instantly!</h5>
+
+        <div class="row">
+            <div class="card">
+                <div class="card-title">BL Inquiry</div>
+                <form class="search-form" action="/InquiryPortal/InquiryPortalByBLNo" method="get">
+                    <div class="search-wrapper">
+                        <input type="text" name="input" class="search-input" placeholder="eg:KMTCHKG3900880" required>
+                        <button type="submit" class="search-button">Search</button>
+                    </div>
+                    <div class="error-message"></div>
+                </form>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Container Inquiry</div>
+                <form class="search-form" action="/InquiryPortal/InquiryByContainerNo" method="get">
+                    <div class="search-wrapper">
+                        <input type="text" name="containerNo" class="search-input" placeholder="Enter Container No" required>
+                        <button type="submit" class="search-button">Search</button>
+                    </div>
+                    <div class="error-message"></div>
+                </form>
+            </div>
+            <div class="card" style="margin-top: 20px; width:100%;">
+                <form id="BillingInquiry" class="search-form" method="post" onsubmit="return submitBillingInquiry();">
+                    <div>
+                        <div class="card-title">Billing Inquiry</div>
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <div class="d-flex align-items-center">
+                                    <label for="billingTypeCY" class="custom-radio" style="margin-right: 20px;">
+                                        <input type="radio" id="billingTypeCY" name="billingType" value="CY" required>
+                                        <span class="radio-label" >CY</span>
+                                    </label>
+                                    <label for="billingTypeCFS" class="custom-radio">
+                                        <input type="radio" id="billingTypeCFS" name="billingType" value="CFS" required>
+                                        <span class="radio-label">CFS</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row" style="margin-top:20px;">
+                            <div class="col-md-4 mt-0 srchBtnm">
+                                <input type="text" id="virNo" name="VirNO" style="border-radius: 20px; border:2px solid #c9302c" class="form-control custom-input" placeholder="Enter IGM No" required>
+                            </div>
+                            <div class="col-md-4 srchBtnm">
+                                <input type="text" id="indexNo" name="IndexNo" style="border-radius: 20px; border:2px solid #c9302c" class="form-control custom-input" placeholder="Enter Index No" required>
+                            </div>
+                            <div class="col-md-4 srchBtnm">
+                                <input type="date" id="FromDate" name="FromDate" class="form-control" style="border-radius: 20px; border: 2px solid #c9302c;" placeholder="dd-mm-yyyy" required>
+                            </div>
+                        </div>
+
+                        <!-- Radio Buttons Section for CY and CFS -->
+                        
+
+                        <div class="d-flex justify-content-end mt-3">
+                            <button type="submit" class="btn" style="background-color: #c9302c; border-radius: 20px; color: white; padding-left: 20px; padding-right: 20px;">
+                                Generate Bill
+                            </button>
+                        </div>
+                        <div class="error-message text-danger mt-2"></div>
+                    </div>
+                </form>
+            </div>
+
+            @*  <div class="card" style="margin-top: 20px; width:100%;">
+                <form id="BillingInquiry" class="search-form" method="post" onsubmit="return submitBillingInquiry();">
+                    <div>
+                        <div class="card-title">Billing Inquiry </div>
+                        <div class="row">
+                            <div class="col-md-4 mt-0 srchBtnm">
+                                <input type="text" id="virNo" name="VirNO" style="border-radius: 20px; border:2px solid #c9302c" class="form-control custom-input" placeholder="Enter IGM No" required>
+                            </div>
+                            <div class="col-md-4 srchBtnm">
+                                <input type="text" id="indexNo" name="IndexNo" style="border-radius: 20px; border:2px solid #c9302c" class="form-control custom-input" placeholder="Enter Index No" required>
+                            </div>
+                            <div class="col-md-4 srchBtnm">
+                                <input type="date" id="FromDate" name="FromDate" class="form-control" style="border-radius: 20px; border: 2px solid #c9302c;" placeholder="dd-mm-yyyy" required>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end mt-3">
+                            <button type="submit" class="btn" style="background-color: #c9302c; border-radius: 20px; color: white; padding-left: 20px; padding-right: 20px;">
+                                Generate Bill
+                            </button>
+                        </div>
+                        <div class="error-message text-danger mt-2"></div>
+                    </div>
+                </form>
+            </div> *@
+         
+
+
+
+            @* <div class="card" style="margin-top: 20px;">
+                <form id="billingInquiryForm" class="search-form" method="post">
+                    <div>
+                        <div class="card-title">Billing Inquiry</div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="text" id="virNo" name="VirNO" class="form-control custom-input"
+                                       placeholder="Enter IGM No" required>
+                            </div>
+                            <div class="col-md-12 mt-2">
+                                <input type="text" id="indexNo" name="IndexNo" class="form-control custom-input"
+                                       placeholder="Enter Index No" required>
+                            </div>
+                            <div class="col-md-12 mt-2">
+                                <input type="text" id="FromDate" name="FromDate" class="form-control custom-input"
+                                       placeholder="Enter From Date" required>
+                            </div>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button type="button" class="btn"
+                                    style="background-color: #c9302c; border-radius: 20px; color: white; padding-left: 20px; padding-right: 20px;"
+                                    onclick="submitBillingInquiry()">
+                                Search
+                            </button>
+                        </div>
+                        <div class="error-message text-danger mt-2"></div>
+                    </div>
+                </form>
+            </div>  *@
+
+
+
+        </div>
+    </div>
+</body>
+</html>
+
+<!-- SweetAlert JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+@if (@ViewBag.ErrorMessage != null)
+{
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '@ViewBag.ErrorMessage'
+                });
+    </script>
+
+}
+<script src="https://cdn.jsdelivr.net/npm/jquery"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+    // Function to format date as dd-mm-yyyy
+    function formatDate(date) {
+        let day = ("0" + date.getDate()).slice(-2);
+        let month = ("0" + (date.getMonth() + 1)).slice(-2);
+        let year = date.getFullYear();
+        return `${day}-${month}-${year}`;
+    }
+
+    // Get today's date and the date 7 days from today
+    const today = new Date();
+    const sevenDaysLater = new Date();
+    sevenDaysLater.setDate(today.getDate() + 7);
+
+    // Format dates as dd-mm-yyyy
+    const formattedToday = formatDate(today);
+    const formattedSevenDaysLater = formatDate(sevenDaysLater);
+
+    // Initialize flatpickr on the input field
+    flatpickr("#FromDate", {
+        dateFormat: "d-m-Y", // Set the format to dd-mm-yyyy
+        minDate: today, // Set the minimum date to today (Date object)
+        maxDate: sevenDaysLater, // Set the maximum date to 7 days from today (Date object)
+    });
+
+    function submitBillingInquiry() {
+        event.preventDefault(); // Prevent form from submitting
+
+        var virNo = $('#virNo').val();
+        var indexNo = $('#indexNo').val();
+         var fromDate = $('#FromDate').val();
+        var billingType = $('input[name="billingType"]:checked').val();
+       
+       
+      
+        $.ajax({
+            url: '/InquiryPortal/BillingInquiry',
+            type: 'POST',
+            data: { VirNO: virNo, IndexNo: indexNo, FromDate: fromDate, BillingType: billingType },
+            success: function (response) {
+                console.log(response.message);
+                
+                var msg = "On Your Request The Estimated Amount: <strong>" + response.totalwithgst + "/- (PKR)</strong>";
+                if (response!=null) {
+                    console.log(response.totalwithgst);
+                    console.log(response.BillDate);
+
+                    if (response.message == "IGM No  cannot be null or empty." || response.message == "Index No cannot be null or empty." || response.message == "Bill Date cannot be null or empty.") {
+                        Swal.fire({
+                            title: 'Validation',
+                            text: response.message, // Use 'html' for HTML formatting
+                            icon: 'error',
+                            confirmButtonText: 'Okay'
+                        });
+                    }
+                    else if (response.message == "Request error: Response status code does not indicate success: 404 (Not Found).") {
+                        Swal.fire({
+                            title: 'Not Found',
+                            text: 'No result found against provided igm & index no', // Use 'html' for HTML formatting
+                            icon: 'error',
+                            confirmButtonText: 'Okay'
+                        });
+                    }
+                    else {
+                        var msg = "On Your Request, The Estimated Amount: <strong>" + response.totalwithgst + "/- (PKR)</strong>";
+                        // var msg = "On Your Request The Estimated Amount: <strong>" + response.totalwithgst + "/- (PKR)</strong>";
+
+                        Swal.fire({
+                            title: 'Success!',
+                            html: msg, // Use 'html' for HTML formatting
+                            icon: 'success',
+                            confirmButtonText: 'Okay'
+                        }).then(() => {
+                            // Clear the input fields after the alert is closed
+                            $('#virNo').val('');
+                            $('#indexNo').val('');
+                            $('#FromDate').val('');
+                        });
+                    }
+                    //const totalAmount = response.totalwithgst;
+                    //const formattedAmount = totalAmount; // Format with commas
+                    //const BillDate = response.BillDate;
+                    
+                    
+                 
+                } else {
+                    Swal.fire({
+                        title: 'Information',
+                        html: 'Your bill has not been generated. Please contact our Customer Service Department at <a href="tel:+92021111000176">+92 021 111 000 176</a> or reach out to us directly via WhatsApp at <a href="https://wa.me/9234520005395" target="_blank">0345 200 5395</a> for assistance. Thank you.',
+                        icon: 'info',
+                        confirmButtonText: 'Okay'
+                    }).then(() => {
+                        // Clear the input fields even if the inquiry was not successful
+                        $('#virNo').val('');
+                        $('#indexNo').val('');
+                        $('#FromDate').val('');
+                    });
+                }
+            },
+            error: function (xhr) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: xhr.responseText || 'An unexpected error occurred.',
+                    icon: 'error',
+                    confirmButtonText: 'Okay'
+                });
+            }
+        });
+
+        return false; // Prevent form submission
+    }
+
+ 
+</script>
+

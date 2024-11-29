@@ -1,0 +1,246 @@
+﻿@model List<ContainerInfo>
+
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.css">
+
+<!-- jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- DataTables JS -->
+<script type="text/javascript" src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.js"></script>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 18px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    th, td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: center;
+    }
+
+    th {
+        background-color: #002D42;
+        color: white;
+        text-transform: uppercase;
+    }
+
+    tbody tr {
+        transition: background-color 0.3s;
+    }
+
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tbody tr:hover {
+            background-color: #e0f7fa;
+        }
+
+    #tblhistory_filter {
+        padding: 5px;
+        margin-top: 5px;
+    }
+
+    #tblhistory_length {
+        padding: 5px;
+        margin-top: 5px;
+    }
+
+    .error-message {
+        color: red;
+        margin: 20px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .no-data {
+        text-align: center;
+        font-size: 18px;
+        color: #555;
+    }
+</style>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Container Inquiry</h2>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-danger text-center" role="alert">
+            <strong>Error:</strong> Invalid container number. No data found.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table id="tblhistory" style="width: 100%; margin-top:5px; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Detail</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>Container No:</strong></td>
+                            <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">@item.ContainerNo</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>IGM No:</strong></td>
+                            <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">@item.igmNo</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>Line:</strong></td>
+                            <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">@item.Line</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>Size:</strong></td>
+                            <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">@item.Size</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>Size Type:</strong></td>
+                            <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">@item.SizeType</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>Category:</strong></td>
+                            <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">@item.Category</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>Goods Description:</strong></td>
+                            <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">@item.GoodsDescription</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>Port Of Discharge:</strong></td>
+                            <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">@item.PortOfDischarge</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>Arrival Date:</strong></td>
+                            <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">@item.ArrivalDate?.ToString("MM/dd/yyyy")</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>Deliver Date:</strong></td>
+                            <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">@item.DeliverDate?.ToString("MM/dd/yyyy")</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>Vessel:</strong></td>
+                            <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">@item.Vessel</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>Voyage:</strong></td>
+                            <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">@item.Voyage</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>Shipper Seal:</strong></td>
+                            <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">@item.ShipperSeal</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>Port Discharge Date:</strong></td>
+                            <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">@item.PortDischargeDate?.ToString("MM/dd/yyyy")</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;text-align: left;"><strong>Gross Weight:</strong></td>
+                            <td style="padding: 10px; border: 1px solid #ddd;text-align: left;">@item.GrossWeight</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <a asp-action="ContainerInquiry" asp-controller="InquiryPortal" class="btn btn-primary mt-3">Back</a>
+        </div>
+    }
+</div>
+
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+<!-- Buttons extension CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
+<!-- Font Awesome CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<!-- Buttons extension JS -->
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+<!-- JSZip for Excel export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<!-- PDFMake for PDF export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<!-- Buttons HTML5 export -->
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+<!-- Print button -->
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+
+
+
+
+<script>
+    var $j = jQuery.noConflict();
+    $j(document).ready(function () {
+        console.log("Document ready, initializing DataTable");
+
+        // Check if the DataTable plugin is loaded
+        if ($j.fn.DataTable) {
+            $j('#tblhistory').DataTable({
+                "paging": true,
+                "searching": true,
+                "info": true,
+                "pageLength": 25,
+                "lengthMenu": [25, 50, 100],
+                "dom": 'Bfrtip',
+                "buttons": [
+                    {
+                        extend: 'excel',
+                        text: '<i class="fas fa-file-excel"></i> Excel',
+                        titleAttr: 'Export to Excel',
+                        className: 'dt-button'
+
+                    },
+                    {
+                        extend: 'pdf',
+                        text: '<i class="fas fa-download"></i> Download',
+                        titleAttr: 'Download as PDF',
+                        className: 'dt-button'
+
+                    },
+                    {
+                        extend: 'print',
+                        text: '<i class="fas fa-print"></i> Print',
+                        titleAttr: 'Print Table',
+                        className: 'dt-button'
+
+                    }
+                ],
+
+                "language": {
+                    "emptyTable": "No data available in table"
+                }
+            });
+            console.log("DataTable initialized successfully");
+        } else {
+            console.error("DataTable plugin is not loaded");
+        }
+    });
+</script>

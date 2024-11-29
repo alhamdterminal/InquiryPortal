@@ -1,0 +1,55 @@
+[
+  {
+    "ContainingType": "InquiryPortal.Controllers.WhatsAppController",
+    "Method": "GetAmountByVirNoOrIndexNo",
+    "RelativePath": "api/WhatsApp/amount-by-virno-indexno",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "virNo",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "indexNo",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InquiryPortal.Controllers.WhatsAppController",
+    "Method": "GetContainersByBLNo",
+    "RelativePath": "api/WhatsApp/by-blno/{blNo}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "blNo",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InquiryPortal.Controllers.WhatsAppController",
+    "Method": "GetContainersByContainerNo",
+    "RelativePath": "api/WhatsApp/by-container-no/{containerNo}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "containerNo",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
